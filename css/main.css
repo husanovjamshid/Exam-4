@@ -1,0 +1,96 @@
+.js-form {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.editModal {
+    padding: 20px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 450px;
+    max-height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: #fff;
+    z-index: 9999;
+}
+
+.add-card {
+  cursor: pointer;
+  border: 2px solid #da002b;
+  text-align: center;
+  text-decoration: none;
+  color: #d6002a;
+  border-radius: 16px;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.add-card:hover {
+  color: #d6002a;
+  text-decoration: none;
+}
+
+.user-like {
+  top: 15px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.card {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.fa-pen-to-square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f6c23e;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.price__credit {
+  font-feature-settings: "pnum" on, "lnum" on;
+  background: #ffd740;
+  border-radius: 6px;
+  color: #111;
+  font-size: 12px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 16px;
+  margin-right: auto;
+  min-height: 24px;
+  order: 3;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.phone__price {
+  font-feature-settings: "pnum" on, "lnum" on;
+  color: #111;
+}
+
+.phone__name {
+  font-feature-settings: "pnum" on, "lnum" on;
+  font-size: 16px;
+  font-weight: 500;
+  height: 48px;
+  /* line-height: 24px; */
+  overflow: hidden;
+  color: #111;
+}
