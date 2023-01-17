@@ -28,7 +28,7 @@ async function render() {
         data.forEach((item) => {
           let bisket = Math.floor(item.product_price / 12);
           elList.innerHTML += `
-          <div class="col-md-3 ">
+          <div class="col-12 col-sm-12 col-md-3 col-lg-3">
                 <div class="card position-relative p-3" >
                     <img src="http://localhost:5000/${item.product_img}" class="img-fluid" height="200" width="233" alt="Sunset Over the Sea"/>
                     <i class="fa-solid fa-heart user-like fa-1x position-absolute"></i>

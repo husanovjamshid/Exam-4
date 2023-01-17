@@ -45,10 +45,10 @@ async function render() {
         data.forEach((item) => {
           let bisket = Math.floor(item.product_price / 12);
           elList.innerHTML += `
-          <div class="col-md-3 ">
+          <div class="col-12 col-sm-12 col-md-6 col-lg-3 ">
                 <div class="card position-relative p-3" >
                     <img src="http://localhost:5000/${item.product_img}" class="img-fluid" height="200" width="233" alt="Sunset Over the Sea"/>
-                    <i class="fa-solid fa-heart user-like fa-1x position-absolute"></i>
+                    <i data-product-id=${item.id} class="fa-solid fa-heart user-like fa-1x position-absolute"></i>
                     <div class="card-body">
                         <p class="phone__name h6 m-0">${item.product_name}</p>
                         <p class="m-0 text-black mb-2">${item.product_desc}</p>
@@ -103,62 +103,70 @@ elForm.addEventListener("submit", (evt) => {
   elModal.classList.add("d-none");
 });
 
-elList.addEventListener("click", (evt) => {
-  if (evt.target.matches(".delete")) {
-    let productId = evt.target.dataset.productId;
-    console.log(productId);
-    fetch(`http://localhost:5000/product/${productId}`, {
-      method: "Delete",
+function deleteProduct(id) {
+  fetch(`http://localhost:5000/product/${id}`, {
+    method: "Delete",
+    headers: {
+      Authorization: localData,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data) {
+        render();
+      }
+    });
+}
+
+function EditProduct(id) {
+  elEditModal.classList.remove("d-none");
+  let elEditForm = document.querySelector(".js-edit-form");
+  let elName = document.querySelector(".edit-name");
+  let elDesc = document.querySelector(".edit-desc");
+  let elImg = document.querySelector("#edit-img");
+  let elPrice = document.querySelector(".edit-price");
+
+  elEditForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+    let formData = new FormData(elForm);
+    formData.append("product_name", elName.value);
+    formData.append("product_desc", elDesc.value);
+    formData.append("product_img", elImg.files[0]);
+    formData.append("product_price", elPrice.value);
+
+    fetch(`http://localhost:5000/product/${id}`, {
+      method: "PUT",
       headers: {
         Authorization: localData,
       },
+      body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
         if (data) {
+          // elList.innerHTML = ''
           render();
         }
-      });
+      })
+      .catch((err) => console.log(err));
+    elEditModal.classList.add("d-none");
+    elName.value = "";
+    elPrice.value = "";
+    elDesc.value = "";
+  });
+}
+
+
+elList.addEventListener("click", (evt) => {
+  if (evt.target.matches(".delete")) {
+    let productId = evt.target.dataset.productId;
+    deleteProduct(productId);
   }
 
   if (evt.target.matches(".edit")) {
     evt.preventDefault();
     let productId = evt.target.dataset.productId;
-    elEditModal.classList.remove("d-none");
-
-    let elEditForm = document.querySelector(".js-edit-form");
-    let elName = document.querySelector(".edit-name");
-    let elDesc = document.querySelector(".edit-desc");
-    let elImg = document.querySelector("#edit-img");
-    let elPrice = document.querySelector(".edit-price");
-
-    elEditForm.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-      let formData = new FormData(elForm);
-      formData.append("product_name", elName.value);
-      formData.append("product_desc", elDesc.value);
-      formData.append("product_img", elImg.files[0]);
-      formData.append("product_price", elPrice.value);
-
-      fetch(`http://localhost:5000/product/${productId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: localData,
-        },
-        body: formData,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data) {
-            // elList.innerHTML = ''
-            render();
-          }
-        })
-        .catch((err) => console.log(err));
-      elEditModal.classList.add("d-none");
-      elName.value = "";
-      elPrice.value = "";
-      elDesc.value = "";
-    });
+    EditProduct(productId);
   }
+
 });
